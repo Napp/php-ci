@@ -19,7 +19,7 @@ These images are built from [Docker official php images](https://registry.hub.do
  - PHPUnit
  - PHP Code Sniffer
  - PHP Mess Detector
- - Node.js v7 from official Node.js Debian repositories
+ - Node.js v6 from official Node.js Debian repositories
  - mysql client for database manipulations
 
 See below for details

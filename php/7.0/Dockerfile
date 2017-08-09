@@ -97,7 +97,7 @@ RUN curl -OL http://static.phpmd.org/php/latest/phpmd.phar \
     && ln -s /usr/local/bin/phpmd.phar /usr/local/bin/phpmd
 
 # Install Node.js
-RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
     && apt-get install -y nodejs build-essential
 
 # Install Yarn
