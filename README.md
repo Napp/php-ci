@@ -84,13 +84,13 @@ variables:
   REDIS_PORT: "6379"
 
 test_php70:
-  image: napp/php:7.0
+  image: napp/php-ci:7.0
   stage: test
   script:
     - phpunit --testsuite=unit
 
 test_php71:
-  image: napp/php:7.1
+  image: napp/php-ci:7.1
   stage: test
   script:
     - phpunit --testsuite=unit
