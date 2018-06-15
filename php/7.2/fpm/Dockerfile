@@ -37,12 +37,8 @@ RUN buildDeps=" \
     && apt-get install -y $buildDeps --no-install-recommends \
     && docker-php-source extract \
     && cd /usr/src/php/ext/ \
-
-    # Xdebug
     && curl -L http://xdebug.org/files/xdebug-$XDEBUG_VERSION.tgz | tar -zxf - \
     && mv xdebug-$XDEBUG_VERSION xdebug \
-
-    # extensions
     && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h \
     && ln -s /usr/lib/x86_64-linux-gnu/libldap_r.so /usr/lib/libldap.so \
     && ln -s /usr/lib/x86_64-linux-gnu/libldap_r.a /usr/lib/libldap_r.a \
@@ -52,11 +48,9 @@ RUN buildDeps=" \
     && docker-php-ext-configure imap --with-imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-configure ldap --with-ldap-sasl \
     && docker-php-ext-install $phpModules \
-
-    # PECL modules
     && printf "\n" | pecl install amqp \
     && pecl install igbinary \
-#    && printf "\n" | pecl install memcache \
+    && printf "\n" | pecl install memcache \
     && pecl install mongodb \
     && pecl install redis \
     && for ext in $phpModules; do \
