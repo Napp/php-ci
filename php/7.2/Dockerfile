@@ -37,12 +37,8 @@ RUN buildDeps=" \
     && apt-get install -y $buildDeps --no-install-recommends \
     && docker-php-source extract \
     && cd /usr/src/php/ext/ \
-
-    # Xdebug
     && curl -L http://xdebug.org/files/xdebug-$XDEBUG_VERSION.tgz | tar -zxf - \
     && mv xdebug-$XDEBUG_VERSION xdebug \
-
-    # extensions
     && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h \
     && ln -s /usr/lib/x86_64-linux-gnu/libldap_r.so /usr/lib/libldap.so \
     && ln -s /usr/lib/x86_64-linux-gnu/libldap_r.a /usr/lib/libldap_r.a \
@@ -52,11 +48,9 @@ RUN buildDeps=" \
     && docker-php-ext-configure imap --with-imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-configure ldap --with-ldap-sasl \
     && docker-php-ext-install $phpModules \
-
-    # PECL modules
     && printf "\n" | pecl install amqp \
     && pecl install igbinary \
-#    && printf "\n" | pecl install memcache \
+    && printf "\n" | pecl install memcache \
     && pecl install mongodb \
     && pecl install redis \
     && for ext in $phpModules; do \
@@ -64,21 +58,17 @@ RUN buildDeps=" \
        done \
     && docker-php-source delete \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false $buildDeps
-
 # Install additional packages
 RUN apt-get update && apt-get install -y git mysql-client msmtp-mta openssh-client rsync --no-install-recommends && rm -r /var/lib/apt/lists/*
-
 # Install composer and put binary into $PATH
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/ \
     && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
-
 # Install phpunit and put binary into $PATH
 RUN curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit.phar \
     && chmod 755 phpunit.phar \
     && mv phpunit.phar /usr/local/bin/ \
     && ln -s /usr/local/bin/phpunit.phar /usr/local/bin/phpunit
-
 # Install PHP Code sniffer
 RUN curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar \
     && chmod 755 phpcs.phar \
@@ -88,25 +78,20 @@ RUN curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar \
     && chmod 755 phpcbf.phar \
     && mv phpcbf.phar /usr/local/bin/ \
     && ln -s /usr/local/bin/phpcbf.phar /usr/local/bin/phpcbf
-
 # Install PHP Mess Detector
 RUN curl -OL http://static.phpmd.org/php/latest/phpmd.phar \
     && chmod 755 phpmd.phar \
     && mv phpmd.phar /usr/local/bin \
     && ln -s /usr/local/bin/phpmd.phar /usr/local/bin/phpmd
-
 # Install Node.js
 RUN apt-get update && apt-get -y install apt-utils gnupg && apt-get install -y build-essential \
     && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
     && apt-get install -y nodejs
-
 # Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     && apt-get update && apt-get install yarn
-
 RUN rm -r /var/lib/apt/lists/* && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false;
-
 COPY msmtprc /etc/
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
