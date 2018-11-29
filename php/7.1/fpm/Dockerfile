@@ -64,4 +64,4 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 EXPOSE 9000
-CMD ["php-fpm7.2"]
+CMD ["php-fpm7.1"]
