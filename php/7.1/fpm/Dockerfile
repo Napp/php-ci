@@ -52,6 +52,11 @@ RUN apt-get update \
         make \
     && /build/cleanup.sh
 
+RUN apt-get update
+RUN apt-get install -y php-pear php7.1-dev
+RUN pecl install redis
+RUN apt-get install -y php-redis
+
 RUN mkdir -p /run/php && chown www-data:www-data /run/php
 
 COPY container /
