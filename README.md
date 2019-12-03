@@ -10,6 +10,7 @@ These docker images can also be used as development images.
 -	[`napp/php-ci:7.1-fpm`, (*Dockerfile*)](https://github.com/Napp/php-ci/blob/master/php/7.1/fpm/Dockerfile)
 -	[`napp/php-ci:7.2-fpm`, (*Dockerfile*)](https://github.com/Napp/php-ci/blob/master/php/7.2/fpm/Dockerfile)
 -	[`napp/php-ci:7.3-fpm`, (*Dockerfile*)](https://github.com/Napp/php-ci/blob/master/php/7.3/fpm/Dockerfile)
+-	[`napp/php-ci:7.4-fpm`, (*Dockerfile*)](https://github.com/Napp/php-ci/blob/master/php/7.4/fpm/Dockerfile)
 
 # Example
 
@@ -30,8 +31,8 @@ variables:
   COMPOSER_HOME: /cache/composer
   REDIS_PORT: "6379"
 
-test_php72:
-  image: napp/php-ci:7.2-fpm
+test_php74:
+  image: napp/php-ci:7.4-fpm
   stage: test
   script:
     - phpunit --testsuite=unit
@@ -51,7 +52,7 @@ version: '2'
 
 services:
   php:
-    image: napp/php-ci:7.2-fpm
+    image: napp/php-ci:7.4-fpm
     volumes:
       - '.:/var/www/html'
     # ...
@@ -63,8 +64,8 @@ services:
 Example of building one of the images
 
 ```
-cd php/7.2/fpm
-docker build -t napp/php-ci:7.2-fpm -f Dockerfile .
-docker push napp/php-ci:7.2-fpm
+cd php/7.4/fpm
+docker build -t napp/php-ci:7.4-fpm -f Dockerfile .
+docker push napp/php-ci:7.4-fpm
 ```
 
