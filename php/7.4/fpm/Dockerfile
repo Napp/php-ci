@@ -66,6 +66,12 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && php -r "unlink('composer-setup.php');"
 
+RUN curl -L https://download.newrelic.com/php_agent/release/newrelic-php5-9.7.0.258-linux.tar.gz | tar -C /tmp -zx && \
+        export NR_INSTALL_USE_CP_NOT_LN=1 && \
+        export NR_INSTALL_SILENT=1 && \
+        /tmp/newrelic-php5-*/newrelic-install install && \
+        rm -rf /tmp/newrelic-php5-* /tmp/nrinstall*
+
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
