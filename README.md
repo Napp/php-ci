@@ -65,7 +65,7 @@ Example of building one of the images
 
 ```
 cd php/7.4/fpm
-docker build -t napp/php-ci:7.4-fpm -f Dockerfile .
+docker build --no-cache -t napp/php-ci:7.4-fpm -f Dockerfile .
 docker push napp/php-ci:7.4-fpm
 ```
 
