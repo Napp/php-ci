@@ -7,6 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 COPY build /build
 
 RUN apt-get update \
+    && apt-get upgrade -yq \
     && apt-get install -yq --no-install-recommends \
         apt-utils \
         apt-transport-https \
