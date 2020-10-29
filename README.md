@@ -1,8 +1,5 @@
-# Napp PHP GitLab CI Docker images
+# Napp PHP Docker images
 
-This repository contains a set of utilities for running PHP tests via [Gitlab CI](https://about.gitlab.com/gitlab-ci/).
-
-These docker images can also be used as development images. 
 
 # Supported tags and respective `Dockerfile` links
 
@@ -11,8 +8,31 @@ These docker images can also be used as development images.
 -	[`napp/php-ci:7.2-fpm`, (*Dockerfile*)](https://github.com/Napp/php-ci/blob/master/php/7.2/fpm/Dockerfile)
 -	[`napp/php-ci:7.3-fpm`, (*Dockerfile*)](https://github.com/Napp/php-ci/blob/master/php/7.3/fpm/Dockerfile)
 -	[`napp/php-ci:7.4-fpm`, (*Dockerfile*)](https://github.com/Napp/php-ci/blob/master/php/7.4/fpm/Dockerfile)
+-	[`napp/php-ci:8.0-fpm`, (*Dockerfile*)](https://github.com/Napp/php-ci/blob/master/php/8.0/fpm/Dockerfile)
+
+- Added `php-ci:8.0-rc1-fpm`
 
 # Example
+
+## Docker Compose 
+
+in a `docker-compose.yml` 
+
+```yaml
+version: '3'
+
+services:
+  php:
+    image: napp/php-ci:8.0-rc2-fpm
+    volumes:
+      - '.:/var/www/html'
+    # ...
+```
+
+
+## GitLab CI
+
+Example use in GitLab CI
 
 ```yaml
 stages:
@@ -31,32 +51,21 @@ variables:
   COMPOSER_HOME: /cache/composer
   REDIS_PORT: "6379"
 
-test_php74:
-  image: napp/php-ci:7.4-fpm
+test_php:
+  image: napp/php-ci:8.0-rc2-fpm
   stage: test
   script:
     - phpunit --testsuite=unit
 
 test_php73:
-  image: napp/php-ci:7.3-fpm
+  image: napp/php-ci:7.4-fpm
   stage: test
   script:
     - phpunit --testsuite=unit
 
 ```
 
-Or in a `docker-compose.yml` for development purposes. 
 
-```yaml
-version: '2'
-
-services:
-  php:
-    image: napp/php-ci:7.4-fpm
-    volumes:
-      - '.:/var/www/html'
-    # ...
-```
 
 
 ## How to build 
@@ -64,8 +73,8 @@ services:
 Example of building one of the images
 
 ```
-cd php/7.4/fpm
-docker build --no-cache -t napp/php-ci:7.4-fpm -f Dockerfile .
-docker push napp/php-ci:7.4-fpm
+cd php/8.0/fpm
+docker build --no-cache -t napp/php-ci:8.0-fpm -f Dockerfile .
+docker push napp/php-ci:8.0-fpm
 ```
 
